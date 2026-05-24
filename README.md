@@ -4,32 +4,20 @@ Playwright end-to-end tests for [halalhub.finbros.co.ke](https://halalhub.finbro
 
 ---
 
-## What's tested
-
-| Spec file | What it covers |
-|---|---|
-| `homepage.spec.ts` | Logo loads, main nav links visible, search box present, Sign In link in header |
-| `login.spec.ts` | Password masking, remember me toggle, empty form submission, wrong credentials error, lost password link |
-| `navigation.spec.ts` | Contact Us and Shop nav links route correctly, 404 page shows for unknown URLs |
-| `search.spec.ts` | Search with a real keyword lands on results page, empty search doesn't crash, XSS payload is safely handled |
-| `contact.spec.ts` | Form fields accept input, valid submission doesn't crash, bad email format stays on page, long message isn't truncated |
-
-20 tests across 5 spec files. All run against the live site on Chromium.
-
 ---
 
 ## Tech
 
 - **Playwright** — test framework
 - **TypeScript** — all tests are typed
-- **Chromium only** — one browser, one worker (live site, no parallelism needed)
+- **Chromium only** — one browser, one worker (live site, no parallel testing needed)
 - Base URL: `https://halalhub.finbros.co.ke`
 
 ---
 
 ## Getting started
 
-You need Node.js 18 or later.
+You need Node.js 18 or above.
 
 ```bash
 npm install
@@ -69,6 +57,5 @@ npx playwright show-report
 ## Config notes
 
 - **1 retry** — enough to handle the occasional network blip on the live site
-- **60s timeout** per test — the site can be slow to load on first navigation
-- **Screenshots and video** saved only on failure
-- All tests call `waitForLoadState('networkidle')` before asserting — the site uses WooCommerce so several background requests fire after initial load
+- **60s timeout** per test — this is because the site can be slow to load on first navigation
+- All tests call `waitForLoadState('networkidle')` before asserting — the site uses WooCommerce, so several background requests fire after initial load
