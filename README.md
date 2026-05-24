@@ -4,8 +4,6 @@ Playwright end-to-end tests for [halalhub.finbros.co.ke](https://halalhub.finbro
 
 ---
 
----
-
 ## Tech
 
 - **Playwright** — test framework
