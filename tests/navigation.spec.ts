@@ -29,7 +29,8 @@ test.describe('Navigation', () => {
     await page.goto('/this-page-absolutely-does-not-exist-xyz999')
     await page.waitForLoadState('networkidle')
     const body = await page.locator('body').textContent()
-    const shows404 = body?.includes('404') || body?.toLowerCase().includes('not found')
+    const bodyText = (body || '').toLowerCase()
+    const shows404 = bodyText.includes('404') || bodyText.includes('not found')
     expect(shows404).toBeTruthy()
   })
 

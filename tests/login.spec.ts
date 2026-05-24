@@ -40,10 +40,12 @@ test.describe('Login', () => {
     await page.waitForLoadState('networkidle')
 
     const body = await page.locator('body').textContent()
-    const hasError = body?.toLowerCase().includes('error') ||
-                     body?.toLowerCase().includes('incorrect') ||
-                     body?.toLowerCase().includes('invalid') ||
-                     body?.toLowerCase().includes('unknown')
+    // toLowerCase() once so we're not repeating the same call on every check
+    const bodyText = (body || '').toLowerCase()
+    const hasError = bodyText.includes('error') ||
+                     bodyText.includes('incorrect') ||
+                     bodyText.includes('invalid') ||
+                     bodyText.includes('unknown')
     expect(hasError).toBeTruthy()
   })
 
