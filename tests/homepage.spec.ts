@@ -1,9 +1,13 @@
 import { test, expect } from '@playwright/test'
 
+// Smoke-level checks for the homepage - just enough to confirm the page
+// loaded correctly and the main elements are where they should be
 test.describe('Homepage', () => {
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
+    // WooCommerce fires several background requests after the initial load,
+    // so wait until the network fully settles before asserting anything
     await page.waitForLoadState('networkidle')
   })
 

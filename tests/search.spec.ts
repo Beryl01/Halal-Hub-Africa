@@ -7,7 +7,8 @@ test.describe('Search', () => {
     await page.waitForLoadState('networkidle')
   })
 
-  // happy path — a real search term should land on the listings page
+  // happy path - searching a real keyword should redirect to the listings page
+  // and the URL should reflect the search term
   test('searching for "halal" redirects to the listings results page', async ({ page }) => {
     const searchInput = page.getByPlaceholder('Type in your keyword')
     await searchInput.fill('halal')
@@ -17,7 +18,8 @@ test.describe('Search', () => {
     await expect(page.getByRole('navigation')).toBeVisible()
   })
 
-  // edge case — pressing Enter on an empty search should not break the page
+  // edge case - pressing Enter with nothing in the box shouldn't throw an error
+  // or leave the user on a broken page
   test('pressing Enter with nothing typed does not break the page', async ({ page }) => {
     const searchInput = page.getByPlaceholder('Type in your keyword')
     await searchInput.fill('')
@@ -25,7 +27,8 @@ test.describe('Search', () => {
     await expect(page.getByRole('navigation')).toBeVisible()
   })
 
-  // security — injecting a script tag should not execute or crash the page
+  // security - an XSS payload in the search box should be safely encoded,
+  // not executed. Also checks the page doesn't crash from unexpected input.
   test('searching with an XSS payload does not execute and page stays intact', async ({ page }) => {
     const searchInput = page.getByPlaceholder('Type in your keyword')
     await searchInput.fill('<script>alert("xss")</script>')
